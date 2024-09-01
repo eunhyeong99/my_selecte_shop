@@ -4,6 +4,7 @@ import com.eunhyeong.myselectshop.dto.request.ProductMypriceRequestDto;
 import com.eunhyeong.myselectshop.dto.request.ProductRequestDto;
 import com.eunhyeong.myselectshop.dto.response.ProductResponseDto;
 import com.eunhyeong.myselectshop.entity.Product;
+import com.eunhyeong.myselectshop.naver.dto.ItemDto;
 import com.eunhyeong.myselectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,5 +51,11 @@ public class ProductService {
         }
 
         return responseDtoList;
+    }
+
+    @Transactional
+    public void updateBySearch(Long id, ItemDto itemDto) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("해당 상품을 찾을 수 없습니다."));
+        product.updateByItemDto(itemDto);
     }
 }
