@@ -4,6 +4,7 @@ import com.eunhyeong.myselectshop.dto.request.ProductMypriceRequestDto;
 import com.eunhyeong.myselectshop.dto.request.ProductRequestDto;
 import com.eunhyeong.myselectshop.dto.response.ProductResponseDto;
 import com.eunhyeong.myselectshop.entity.Product;
+import com.eunhyeong.myselectshop.entity.User;
 import com.eunhyeong.myselectshop.naver.dto.ItemDto;
 import com.eunhyeong.myselectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class ProductService {
     public static final int MIN_MY_PRICE = 100;
 
     @Transactional
-    public ProductResponseDto createProduct(ProductRequestDto requestDto) {
-        Product product = productRepository.save(new Product(requestDto));
+    public ProductResponseDto createProduct(ProductRequestDto requestDto, User user) {
+        Product product = productRepository.save(new Product(requestDto, user));
         return new ProductResponseDto(product);
     }
 
@@ -42,8 +43,8 @@ public class ProductService {
     }
 
 
-    public List<ProductResponseDto> getProducts() {
-        List<Product> producList = productRepository.findAll();
+    public List<ProductResponseDto> getProducts(User user) {
+        List<Product> producList = productRepository.findAllByUser(user);
         List<ProductResponseDto> responseDtoList = new ArrayList<>();
 
         for (Product product : producList) {
@@ -57,5 +58,16 @@ public class ProductService {
     public void updateBySearch(Long id, ItemDto itemDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NullPointerException("해당 상품을 찾을 수 없습니다."));
         product.updateByItemDto(itemDto);
+    }
+
+    public List<ProductResponseDto> getAllProducts() {
+        List<Product> producList = productRepository.findAll();
+        List<ProductResponseDto> responseDtoList = new ArrayList<>();
+
+        for (Product product : producList) {
+            responseDtoList.add(new ProductResponseDto(product));
+        }
+
+        return responseDtoList;
     }
 }
