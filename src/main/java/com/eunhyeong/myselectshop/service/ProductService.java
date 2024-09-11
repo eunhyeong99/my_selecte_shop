@@ -8,7 +8,6 @@ import com.eunhyeong.myselectshop.naver.dto.ItemDto;
 import com.eunhyeong.myselectshop.repository.FolderRepository;
 import com.eunhyeong.myselectshop.repository.ProductFolderRepository;
 import com.eunhyeong.myselectshop.repository.ProductRepository;
-import com.eunhyeong.myselectshop.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
