@@ -21,7 +21,6 @@ public class FolderController {
     @PostMapping("/folders")
     public void addFolders(@RequestBody FolderRequestDto folderRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         List<String> folderNames = folderRequestDto.getFolderNames();
-
         folderService.addFolders(folderNames, userDetails.getUser());
     }
 
